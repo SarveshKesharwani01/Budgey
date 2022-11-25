@@ -1,13 +1,13 @@
 // Here we have to add google, and other app authorisations
 
 import styles from "../styles/authComponents/Auth.module.scss";
-
 import MainContainer from "../components/Containers/MainContainer";
 import { Title } from "../components/Titles/Titles";
-
-import { useState } from "react";
-
+import { useContext, useState, useEffect } from "react";
 import { useLoginUser, useRegisterUser } from "../queries/user";
+import { Navigate, useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthProvider";
+
 const Auth = () => {
   // login
   const [email, setEmail] = useState("");
@@ -15,7 +15,11 @@ const Auth = () => {
   // register
   const [regEmail, setRegEmail] = useState("");
   const [regPw, setRegPw] = useState("");
-
+  // context
+  const { auth, setAuth } = useContext(AuthContext);
+  // navigate
+  const navigate = useNavigate();
+  
   let body = {
     email: email,
     password: pw,
@@ -39,6 +43,9 @@ const Auth = () => {
     error: registerErr,
   } = useRegisterUser();
 
+  useEffect(() => {
+    if (auth) navigate("/");
+  });
   return (
     <MainContainer>
       {/* Login */}
@@ -60,7 +67,18 @@ const Auth = () => {
             autoComplete="password"
           />
           {/* Login Button */}
-          <button>Login Now</button>
+          <button
+            onClick={() =>
+              loginHandler(body, {
+                onError: () => {
+                  console.log(loginErr);
+                },
+                onSuccess: () => setAuth(true),
+              })
+            }
+          >
+            Login Now
+          </button>
         </div>
       </form>
       {/* Register */}
@@ -86,7 +104,24 @@ const Auth = () => {
             autoComplete="password"
           />
           {/* Register button */}
-          <button onClick={() => registerHandler(regBody)}>Register Now</button>
+          <button
+            onClick={() =>
+              registerHandler(regBody, {
+                // on succes use loginhandler
+                onSuccess: () => {
+                  loginHandler(regBody, {
+                    onSuccess: () => setAuth(true),
+                    onError: () => {
+                      console.log(loginErr);
+                    },
+                  });
+                },
+              })
+            }
+          >
+            Register Now
+          </button>
+          {/* Add Error */}
         </div>
       </form>
     </MainContainer>

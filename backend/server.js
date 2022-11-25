@@ -6,10 +6,12 @@ const path = require("path");
 
 //routes
 const authRoutes = require("./routes/authRoutes");
-
+const userRoutes = require("./routes/userRoutes");
+const transactionRoutes = require("./routes/transactionRoutes");
+const categoriesRoutes = require("./routes/categoriesRoutes");
 const app = express();
-const port = process.env.PORT || 5000;
-const { prisma } = require("./constants/config");
+const port = process.env.PORT || 3000;
+const { prisma } = require("./constats/config");
 const { NONAME } = require("dns");
 // const PrismaStore = require("./lib/index")(session);
 
@@ -42,6 +44,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 //routes
 app.use("/api", authRoutes);
+app.use("/api", userRoutes);
+app.use("/api", transactionRoutes);
+app.use("/api", categoriesRoutes);
+
 app.listen(port, () => {
   console.log(`Server on Port: ${port}`);
 });

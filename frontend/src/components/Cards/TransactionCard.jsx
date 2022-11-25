@@ -6,7 +6,9 @@ import { BsHouseDoor } from "react-icons/bs";
 import { HiOutlineFire } from "react-icons/hi";
 import { RiArrowUpSLine, RiArrowDownSLine } from "react-icons/ri";
 import { useState, useEffect } from "react";
-
+import { RiBook2Line } from "react-icons/ri";
+import { MdFastfood } from "react-icons/md";
+import { AiFillCar } from "react-icons/ai";
 const CategoryIcon = ({ category }) => {
   const [style, setStyle] = useState({});
   const categoryStyle = () => {
@@ -18,30 +20,42 @@ const CategoryIcon = ({ category }) => {
           color: "#ff6275",
         };
       }
-      case "Products": {
+      case "Study": {
         return {
+          ctg: "Study",
           background: "#fdeacc",
-          icon: <FiBox />,
+          icon: <RiBook2Line />,
           color: "#f8aa35",
         };
       }
       case "Entertainment":
         return {
+          ctg: "Entertainment",
           background: "#e4fid5",
           icon: <IoGameControllerOutline />,
           color: "#92c44c",
         };
-      case "Bills": {
+      case "Food": {
         return {
-          ctg: "Bills",
-          icon: <BsHouseDoor />,
+          ctg: "Food",
+          icon: <MdFastfood />,
+          color: "#e0144c",
+          background: "#ff97c1"
+        };
+      }
+      case "Travel": {
+        return {
+          ctg: "Travel",
+          icon: <AiFillCar />,
           color: "#5a92d6",
+          background: "#c3f8ff",
         };
       }
     }
   };
   useEffect(() => {
     setStyle(categoryStyle());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category]);
   return (
     <div
@@ -80,7 +94,7 @@ const TransactionCard = ({ category, date, money, description, title }) => {
 
         {/* Money */}
         <div className={styles.moneyContainer}>
-          <span>{`-$${money}`}</span>
+          <span>{`₹${money}`}</span>
           <div
             className={styles.iconContainer}
             onClick={() => setVisible(!visible)}

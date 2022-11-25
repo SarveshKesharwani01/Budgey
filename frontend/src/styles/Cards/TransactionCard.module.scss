@@ -4,7 +4,7 @@
   border-radius: 5px;
   svg {
     --svg-size: 1.8rem;
-    with: var(--svg-size);
+    width: var(--svg-size);
     height: var(--svg-size);
   }
 }

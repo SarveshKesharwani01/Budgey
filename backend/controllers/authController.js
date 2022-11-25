@@ -1,4 +1,4 @@
-const { prisma } = require("../constants/config");
+const { prisma } = require("../constats/config");
 const bycrypt = require("bcrypt");
 
 const auth_login = async (req, res) => {
@@ -85,6 +85,7 @@ const auth_register = async (req, res) => {
 };
 
 const auth_logout = async (req, res) => {
+  console.log(req.session.userId);
   if (req.session.userId) {
     req.session.destroy();
     res.clearCookie("sess").status(200).send("Cookie Cleared");
@@ -105,8 +106,8 @@ const auth_user = async (req, res) => {
       const data = {
         email: user.email,
         userId: user.id,
-        firstName: user.firstname,
-        lastName: user.lastname,
+        firstName: user.firstName,
+        lastName: user.lastName,
       };
       res.status(200).json(data);
     } catch {
@@ -116,6 +117,7 @@ const auth_user = async (req, res) => {
     res.status(401).send("Please Login");
   }
 };
+
 module.exports = {
   auth_register,
   auth_login,

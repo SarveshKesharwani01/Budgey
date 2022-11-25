@@ -5,13 +5,35 @@ import styles from "../../styles/Navbar/Navbar.module.scss";
 import ListItemLink from "./ListItemLink";
 
 // utils
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthProvider";
+
+// react query
+import { useLogoutUser } from "../../queries/user";
+import { queryClient } from "../../constants/config";
+
+// hooks
+import { useEffect } from "react";
+
 const Navbar = () => {
+  const { setAuth, auth } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const { mutate: logoutHandler, isSuccess } = useLogoutUser();
+
+  useEffect(() => {
+    if (isSuccess) {
+      queryClient.removeQueries();
+      setAuth(false);
+      if (!auth) navigate("auth");
+    }
+  }, [isSuccess, auth, navigate, setAuth]);
+
   return (
     <div className={styles.container}>
       <div className={styles.logo}>
         <Link to="/">
-          <div>Tracker</div>
+          <div>Budgey</div>
         </Link>
       </div>
       {/* Nav */}
@@ -43,14 +65,14 @@ const Navbar = () => {
               <h3>Profile</h3>
             </ListItemLink>
           </div>
-          
+
           {/*Settings*/}
           <div className={styles.mobileMenuLinks}>
             <ListItemLink url="settings">
               <h3>Settings</h3>
             </ListItemLink>
           </div>
-          <ListItemLink url="logout" >
+          <ListItemLink url="logout" clickHandler={logoutHandler}>
             <h3>Logout</h3>
           </ListItemLink>
         </ul>
