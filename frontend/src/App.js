@@ -1,6 +1,6 @@
 import "./styles/App.scss";
 import { Route, Routes } from "react-router-dom";
-
+import { Navigate } from "react-router-dom";
 //components
 import PageContainer from "./components/Containers/PageContainer";
 import Navbar from "./components/Navbar/Navbar";
@@ -47,7 +47,8 @@ function App() {
                 <Route path="/transactions" element={<Transactions />} />
                 {/* Categories */}
                 <Route path="/categories" element={<Categories />} />
-
+                {/* Logout */}
+                <Route path="/logout" element={<Navigate to="/auth"/>} />
                 {/* 404 */}
                 <Route
                   path="/*"

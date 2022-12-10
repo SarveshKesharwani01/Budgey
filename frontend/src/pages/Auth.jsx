@@ -45,7 +45,7 @@ const Auth = () => {
 
   useEffect(() => {
     if (auth) navigate("/");
-  });
+  },[auth, navigate]);
   return (
     <MainContainer>
       {/* Login */}
@@ -71,7 +71,7 @@ const Auth = () => {
             onClick={() =>
               loginHandler(body, {
                 onError: () => {
-                  console.log(loginErr);
+                  // console.log(loginErr);
                 },
                 onSuccess: () => setAuth(true),
               })
@@ -112,7 +112,7 @@ const Auth = () => {
                   loginHandler(regBody, {
                     onSuccess: () => setAuth(true),
                     onError: () => {
-                      console.log(loginErr);
+                      // console.log(loginErr);
                     },
                   });
                 },

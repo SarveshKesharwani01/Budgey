@@ -102,7 +102,7 @@ const AddTransactionForm = () => {
         ) : (
           <div>Loading...</div>
         )}
-
+  
         {/* Post Transaction */}
         <button
           onClick={() => {
@@ -111,6 +111,7 @@ const AddTransactionForm = () => {
             if (!isNaN(body.money) && body.title.trim().length !== 0) {
               setWarning1(0);
               setWarning2(0);
+              console.log(body.date);
               postTransaction(body, {
                 onSuccess: async () => {
                   await queryClient.invalidateQueries("Categories_Sum");

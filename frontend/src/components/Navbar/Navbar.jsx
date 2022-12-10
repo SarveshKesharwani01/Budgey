@@ -38,7 +38,7 @@ const Navbar = () => {
       </div>
       {/* Nav */}
       <nav>
-        <ul>
+        {auth ? <ul>
           {/*Home*/}
           <ListItemLink url="">
             <h3>Home</h3>
@@ -75,7 +75,7 @@ const Navbar = () => {
           <ListItemLink url="logout" clickHandler={logoutHandler}>
             <h3>Logout</h3>
           </ListItemLink>
-        </ul>
+        </ul> : <div> </div>}
       </nav>
     </div>
   );

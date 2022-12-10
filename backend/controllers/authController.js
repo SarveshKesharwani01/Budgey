@@ -85,10 +85,10 @@ const auth_register = async (req, res) => {
 };
 
 const auth_logout = async (req, res) => {
-  console.log(req.session.userId);
   if (req.session.userId) {
     req.session.destroy();
-    res.clearCookie("sess").status(200).send("Cookie Cleared");
+    res.clearCookie("sess");
+    res.status(200).send("Cookie Cleared");
   } else {
     res.status(401).send("You are not logged in");
   }

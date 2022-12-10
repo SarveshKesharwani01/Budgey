@@ -29,9 +29,12 @@ const Categories = () => {
       category: categories ? categories : undefined,
       [sortingField]: order,
       skip: skip,
-      take: 10,
+      take: 20,
       key: "CategoriesTrs",
     });
+   //console.log(timeSpan, categories, sortingField, order, skip);
+  //  console.log(sortingField);
+   
   return (
     <MainContainer>
       <Title>Categories</Title>
@@ -106,8 +109,8 @@ const Categories = () => {
                 name="sortingField"
                 onChange={(e) => setSortingField(e.target.value)}
               >
-                <option value="date">Date</option>
-                <option value="price">Price</option>
+                <option value="dateSort">Date</option>
+                <option value="priceSort">Price</option>
               </select>
             </div>
           </div>
@@ -118,7 +121,7 @@ const Categories = () => {
               <label htmlFor="order">Order: </label>
               <select name="order" onChange={(e) => setOrder(e.target.value)}>
                 <option value="asc">Ascending</option>
-                <option value="dsc">Descending</option>
+                <option value="desc">Descending</option>
               </select>
             </div>
           </div>
@@ -131,6 +134,7 @@ const Categories = () => {
           <div className={styles.inner}>
             {FilteredTransactions &&
               FilteredTransactions.data?.map((transaction, index) => {
+                
                 return (
                   <TransactionCard
                     key={index}

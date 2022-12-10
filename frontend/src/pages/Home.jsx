@@ -40,7 +40,7 @@ const Home = () => {
             {/* Sum */}
             {CategoriesSum &&
               CategoriesSum.map((category, index) => {
-                console.log(category);
+                // console.log(category);
                 return (
                   <CategoryCard
                     key={index}

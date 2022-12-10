@@ -48,6 +48,8 @@ const transaction_get = async (req, res) => {
   if (req.session.userId) {
     let { firstDate, lastDate, category, dateSort, priceSort, take, skip } =
       req.query;
+    //console.log(`firstDate: ${firstDate}, lastDate: ${lastDate}, category: ${category}, dateSort: ${dateSort},
+      //priceSort: ${priceSort}, take: ${take}, skip: ${skip}`);
     if (!Number(skip)) {
       skip = 0;
     }
@@ -75,8 +77,8 @@ const transaction_get = async (req, res) => {
             equals: category != undefined ? parseInt(category) : undefined,
           },
         },
-        skip: parseInt(skip),
-        take: parseInt(take),
+        // skip: parseInt(skip),
+        // take: parseInt(take),
         orderBy: {
           date: dateSort != undefined ? dateSort : undefined,
           money: priceSort != undefined ? priceSort : undefined,
@@ -95,9 +97,11 @@ const transaction_get = async (req, res) => {
         },
       })
       .catch((e) => {
+        console.log(e);
         res.status(400).send("Transaction Error");
       });
     res.json(transaction);
+    //console.log(transaction);
   } else res.status(401).send("Please Login");
 };
 

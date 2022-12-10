@@ -48,11 +48,11 @@ const user_update_password = async (req, res) => {
 
   // if user is found
   if (user) {
-    const isPassCorrect = await bycrypt.compare(oldPassword, user.password);
+    const isPassCorrect = await bycrypt.compare(req.body.oldPassword, user.password);
     if (isPassCorrect) {
       // hashing and salting new password
       const saltRounds = 10;
-      let newPassword = await bycrypt.hash(password, saltRounds);
+      let newPassword = await bycrypt.hash(req.body.password, saltRounds);
       try {
         await prisma.user.update({
           where: {
