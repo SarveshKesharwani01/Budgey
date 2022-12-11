@@ -49,7 +49,7 @@ const transaction_get = async (req, res) => {
     let { firstDate, lastDate, category, dateSort, priceSort, take, skip } =
       req.query;
     //console.log(`firstDate: ${firstDate}, lastDate: ${lastDate}, category: ${category}, dateSort: ${dateSort},
-      //priceSort: ${priceSort}, take: ${take}, skip: ${skip}`);
+    //priceSort: ${priceSort}, take: ${take}, skip: ${skip}`);
     if (!Number(skip)) {
       skip = 0;
     }
@@ -136,8 +136,30 @@ const transaction_delete = async (req, res) => {
   }
 };
 
+const transaction_add_category = async (req, res) => {
+  if (req.session.userId) {
+    try {
+      await prisma.transactionCategory.create({
+        data: {
+          name: req.body.name,
+          Transactions: { create: [] },
+        },
+      });
+      res.status(200).send("Category Added Successfully");
+    } catch (err) {
+      console.log(err);
+      res.status(400).send({
+        instancePath: "Error",
+        message: "Category Could Not Be Added",
+      });
+    }
+  } else {
+    res.status(401).send("Please Login");
+  }
+};
 module.exports = {
   transaction_post,
   transaction_get,
   transaction_delete,
+  transaction_add_category,
 };

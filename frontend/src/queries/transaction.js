@@ -16,6 +16,9 @@ const postTr = async (params) => {
   return await Ax.post("transaction", params);
 };
 
+const addCategory = async (params) => {
+  return await Ax.post("/transaction/add", params); 
+}
 const useTransactionDelete = () => useMutation("deleteTr", deleteTr);
 const useTransactionGet = ({
   firstDate,
@@ -47,5 +50,5 @@ const useTransactionGet = ({
   );
 
 const useTransactionPost = () => useMutation("postTransaction", postTr);
-
-export { useTransactionGet, useTransactionDelete, useTransactionPost };
+const useTransactionCategoryAdd = () => useMutation("addCategory", addCategory); 
+export { useTransactionGet, useTransactionDelete, useTransactionPost, useTransactionCategoryAdd };
