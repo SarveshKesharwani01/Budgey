@@ -44,6 +44,7 @@ CREATE TABLE "Transaction" (
 CREATE TABLE "TransactionCategory" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
+    "walletId" INTEGER,
 
     CONSTRAINT "TransactionCategory_pkey" PRIMARY KEY ("id")
 );
@@ -68,3 +69,6 @@ ALTER TABLE "Transaction" ADD CONSTRAINT "Transaction_transactionCategoryId_fkey
 
 -- AddForeignKey
 ALTER TABLE "Transaction" ADD CONSTRAINT "Transaction_walletId_fkey" FOREIGN KEY ("walletId") REFERENCES "Wallet"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "TransactionCategory" ADD CONSTRAINT "TransactionCategory_walletId_fkey" FOREIGN KEY ("walletId") REFERENCES "Wallet"("id") ON DELETE SET NULL ON UPDATE CASCADE;

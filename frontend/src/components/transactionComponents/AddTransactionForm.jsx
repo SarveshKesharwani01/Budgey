@@ -21,9 +21,9 @@ const AddTransactionForm = () => {
   const [isMoney, setIsMoney] = useState("");
   const [warning1, setWarning1] = useState(0);
   const [warning2, setWarning2] = useState(0);
-  // console.log(ctgs);
+  console.log("ctgs: ", ctgs);
   useEffect(() => {
-    if (ctgs) setCategory(ctgs[0].id);
+    if (ctgs !== undefined) setCategory(ctgs[0].id);
     else setCategory(1);
   }, [ctgs]);
 

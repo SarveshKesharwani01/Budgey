@@ -138,11 +138,20 @@ const transaction_delete = async (req, res) => {
 
 const transaction_add_category = async (req, res) => {
   if (req.session.userId) {
+    const wallet = await prisma.wallet
+      .findUnique({
+        where: {
+          userId: req.session.userId,
+        },
+      })
+      .catch();
+
     try {
       await prisma.transactionCategory.create({
         data: {
           name: req.body.name,
-          Transactions: { create: [] },
+          walletId: wallet.id,
+          // Transactions: { create: [] },
         },
       });
       res.status(200).send("Category Added Successfully");

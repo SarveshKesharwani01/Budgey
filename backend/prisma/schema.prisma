@@ -27,10 +27,11 @@ model User {
 }
 
 model Wallet {
-  id          Int           @id @default(autoincrement())
-  user        User          @relation(fields: [userId], references: [id])
-  userId      Int           @unique
-  tranactions Transaction[]
+  id                  Int                   @id @default(autoincrement())
+  user                User                  @relation(fields: [userId], references: [id])
+  userId              Int                   @unique
+  tranactions         Transaction[]
+  TransactionCategory TransactionCategory[]
 }
 
 model Transaction {
@@ -47,6 +48,8 @@ model Transaction {
 
 model TransactionCategory {
   id           Int           @id @default(autoincrement())
-  name         String        @unique
+  name         String        
   Transactions Transaction[]
+  Wallet       Wallet       @relation(fields: [walletId], references: [id])
+  walletId     Int
 }
