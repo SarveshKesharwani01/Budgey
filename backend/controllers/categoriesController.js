@@ -11,7 +11,6 @@ const categories_get = async (req, res) => {
         },
       })
       .catch();
-    console.log(wallet.id);
     try {
       ctgs = await prisma.transactionCategory
         .findMany({
@@ -20,7 +19,7 @@ const categories_get = async (req, res) => {
           },
         })
         .catch(() => console.log("Categories Error"));
-        
+
       if (ctgs.length === 0) {
         await prisma.transactionCategory
           .createMany({
@@ -45,7 +44,7 @@ const categories_get = async (req, res) => {
             },
           })
           .catch(() => console.log("Categories Error"));
-        console.log("new ctgs: ", ctgs);
+        // console.log("new ctgs: ", ctgs);
         res.status(200).send(ctgs);
       } else {
         res.status(200).send(ctgs);
@@ -81,6 +80,7 @@ const categories_transaction_sum = async (req, res) => {
           },
         },
       });
+      // console.log(transactions);
       res.send(transactions);
     } catch {
       res.status(400).send("Transaction Error");

@@ -12,14 +12,14 @@ const transaction_post = async (req, res) => {
       })
       .catch();
 
-    console.log({
-      title: req.body.title,
-      money: req.body.money,
-      data: date,
-      info: req.body.info,
-      transactionCategoryId: req.body.transactionCategoryId,
-      walletId: wallet.id,
-    });
+    // console.log({
+    //   title: req.body.title,
+    //   money: req.body.money,
+    //   data: date,
+    //   info: req.body.info,
+    //   transactionCategoryId: req.body.transactionCategoryId,
+    //   walletId: wallet.id,
+    // });
     try {
       await prisma.transaction.create({
         data: {

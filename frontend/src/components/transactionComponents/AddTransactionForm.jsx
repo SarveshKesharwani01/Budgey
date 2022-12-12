@@ -21,7 +21,8 @@ const AddTransactionForm = () => {
   const [isMoney, setIsMoney] = useState("");
   const [warning1, setWarning1] = useState(0);
   const [warning2, setWarning2] = useState(0);
-  console.log("ctgs: ", ctgs);
+  const [warning3, setWarning3] = useState(0);
+  // console.log("ctgs: ", ctgs);
   useEffect(() => {
     if (ctgs !== undefined) setCategory(ctgs[0].id);
     else setCategory(1);
@@ -71,6 +72,11 @@ const AddTransactionForm = () => {
         ) : (
           ""
         )}
+        {warning3 === 1 ? (
+          <WarningContainer message="Amount cannot be Zero Or Negative" />
+        ) : (
+          ""
+        )}
         <input
           type="date"
           placeholder="date"
@@ -102,26 +108,36 @@ const AddTransactionForm = () => {
         ) : (
           <div>Loading...</div>
         )}
-  
+
         {/* Post Transaction */}
         <button
           onClick={() => {
             setIsMoney(body.money);
             setIsTitle(body.title);
-            if (!isNaN(body.money) && body.title.trim().length !== 0) {
+            if (
+              !isNaN(body.money) &&
+              body.money > 0 &&
+              body.title.trim().length !== 0
+            ) {
               setWarning1(0);
               setWarning2(0);
-              console.log(body.date);
+              setWarning3(0);
+              // console.log(body.date);
               postTransaction(body, {
                 onSuccess: async () => {
                   await queryClient.invalidateQueries("Categories_Sum");
+                  setTitle("");
+                  setMoney("");
+                  setInfo("");
                 },
               });
             } else {
               if (isNaN(body.money)) setWarning2(1);
+              else setWarning2(0);
               if (body.title.trim().length === 0) setWarning1(1);
-              if (!isNaN(body.money)) setWarning2(0);
-              if (body.title.trim().length !== 0) setWarning1(0);
+              else setWarning1(0);
+              if (body.money <= 0) setWarning3(1);
+              else setWarning3(0);
             }
           }}
         >

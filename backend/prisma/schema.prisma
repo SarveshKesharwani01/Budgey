@@ -23,12 +23,14 @@ model User {
   lastName  String?
   email     String  @unique
   password  String
+  budget    Int?
   Wallet    Wallet?
+  
 }
 
 model Wallet {
   id                  Int                   @id @default(autoincrement())
-  user                User                  @relation(fields: [userId], references: [id])
+  user                User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId              Int                   @unique
   tranactions         Transaction[]
   TransactionCategory TransactionCategory[]
@@ -40,16 +42,17 @@ model Transaction {
   money                 Float
   date                  DateTime            @default(now())
   info                  String?
-  category              TransactionCategory @relation(references: [id], fields: [transactionCategoryId])
+  category              TransactionCategory @relation(references: [id], fields: [transactionCategoryId], onDelete: Cascade)
   transactionCategoryId Int
-  wallet                Wallet              @relation(fields: [walletId], references: [id])
+  wallet                Wallet              @relation(fields: [walletId], references: [id], onDelete: Cascade)
   walletId              Int
 }
 
 model TransactionCategory {
   id           Int           @id @default(autoincrement())
-  name         String        
+  name         String
   Transactions Transaction[]
-  Wallet       Wallet       @relation(fields: [walletId], references: [id])
+  Wallet       Wallet        @relation(fields: [walletId], references: [id], onDelete: Cascade)
   walletId     Int
+  budget       Int?
 }

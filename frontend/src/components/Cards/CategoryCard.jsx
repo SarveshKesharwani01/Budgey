@@ -13,13 +13,13 @@ const CategoryCard = ({ category, money }) => {
     switch (category) {
       default: {
         return {
-          ctg: "Miscellaneous",
+          ctg: category,
           icon: <HiOutlineFire style={{ color: "#ffbece" }} />,
           background: "#ff6275",
         };
       }
       case "Study":
-      case 1: {
+      case 1:{
         return {
           ctg: "Study",
           icon: <RiBook2Line style={{ color: "#fdeacc" }} />,

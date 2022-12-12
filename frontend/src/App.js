@@ -16,7 +16,7 @@ import Settings from "./pages/Settings";
 import Profile from "./pages/Profile";
 import Transactions from "./pages/Transactions";
 import Categories from "./pages/Categories";
-
+import Wallet from "./pages/Wallet";
 //react query
 import { ReactQueryDevtools } from "react-query/devtools";
 import { QueryClientProvider } from "react-query";
@@ -47,8 +47,10 @@ function App() {
                 <Route path="/transactions" element={<Transactions />} />
                 {/* Categories */}
                 <Route path="/categories" element={<Categories />} />
+                {/* Wallet */}
+                <Route path="/wallet" element={<Wallet />} />
                 {/* Logout */}
-                <Route path="/logout" element={<Navigate to="/auth"/>} />
+                <Route path="/logout" element={<Navigate to="/auth" />} />
                 {/* 404 */}
                 <Route
                   path="/*"

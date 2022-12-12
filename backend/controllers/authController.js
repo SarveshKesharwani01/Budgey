@@ -110,8 +110,10 @@ const auth_user = async (req, res) => {
         lastName: user.lastName,
       };
       res.status(200).json(data);
-    } catch {
-      res.status(500).json("Something Went Wrong {auth}");
+      return;
+    } catch(e) {
+      console.log(e);
+      res.status(500).send("Something Went Wrong");
     }
   } else {
     res.status(401).send("Please Login");

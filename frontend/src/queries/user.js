@@ -35,13 +35,31 @@ const useUser = () =>
     retry: false,
   });
 
+const budgetGet = async () => {
+  return await Ax.get("/me/budget");
+};
+const useUserBudgetGet = () => {
+  const { status, data } = useQuery("Budget", budgetGet);
+
+  if (status === "loading") {
+    return {data : {budget: 0}};
+  } else if (status === "success") {
+    return data;
+  }
+};
+
+const budgetUpdate = async (body) => {
+  return await Ax.patch("me/budget/sm", body);
+};
 const useLoginUser = () => useMutation("loginUser", loginUser);
 const useLogoutUser = () => useMutation("logoutUser", logoutUser);
 const useRegisterUser = () => useMutation("registerUser", registerUser);
 const useUserUpdate = () => useMutation("updateUser", userUpdate);
+
 const useUserUpdatePassword = () =>
   useMutation("updateUserPassword", userUpdatePassword);
 
+const useUserBudgetUpdate = () => useMutation("budgetUpdate", budgetUpdate);
 export {
   useUser,
   useLoginUser,
@@ -49,4 +67,6 @@ export {
   useLogoutUser,
   useUserUpdate,
   useUserUpdatePassword,
+  useUserBudgetGet,
+  useUserBudgetUpdate,
 };

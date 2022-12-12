@@ -10,6 +10,7 @@ import { DateTime } from "luxon";
 import { useTransactionGet } from "../queries/transaction";
 import { useCategoriesSum } from "../queries/category";
 import { useEffect } from "react";
+import { useCategoriesGetForCategories } from "../queries/category";
 
 const Home = () => {
   // Latest Transaction
@@ -18,7 +19,8 @@ const Home = () => {
     skip: 0,
     take: 5,
   });
-
+  const { data: ctgs, isFetched: isCtgsFetched } =
+  useCategoriesGetForCategories();
   const { data: CategoriesSum } = useCategoriesSum();
 
   // console.log(CategoriesSum);
@@ -38,17 +40,20 @@ const Home = () => {
           <Title>Categories last 30 days</Title>
           <div className={styles.content}>
             {/* Sum */}
-            {CategoriesSum &&
-              CategoriesSum.map((category, index) => {
-                // console.log(category);
-                return (
-                  <CategoryCard
-                    key={index}
-                    category={category.transactionCategoryId}
+            {CategoriesSum && CategoriesSum.map((category, index) => {
+        return <div
+        key={index}>
+          {ctgs && ctgs.data && ctgs?.data?.map((ctgs, index1)=>{
+            if(ctgs.id === category.transactionCategoryId){
+              return <CategoryCard
+                    key={index1}
+                    category={ctgs.name}
                     money={category._sum.money.toFixed(2)}
                   />
-                );
-              })}
+            }
+          })}
+        </div>
+      }) }
           </div>
         </div>
 

@@ -48,7 +48,10 @@ const user_update_password = async (req, res) => {
 
   // if user is found
   if (user) {
-    const isPassCorrect = await bycrypt.compare(req.body.oldPassword, user.password);
+    const isPassCorrect = await bycrypt.compare(
+      req.body.oldPassword,
+      user.password
+    );
     if (isPassCorrect) {
       // hashing and salting new password
       const saltRounds = 10;
@@ -88,4 +91,55 @@ const user_update_password = async (req, res) => {
     res.status(401).send("Please Login");
   }
 };
-module.exports = { user_update_meta, user_update_password };
+
+const user_get_budget = async (req, res) => {
+  if (req.session.userId) {
+    let budgetget;
+    try {
+      budgetget = await prisma.user.findFirst({
+        where: {
+          id: req.session.userId,
+        },
+        select: {
+          budget: true,
+        },
+      });
+      console.log(budgetget);
+      res.status(200).send(budgetget);
+    } catch (e) {
+      console.log(e);
+      res.status(500).send("Error in Getting Budget");
+    }
+  } else {
+    res.status(401).send("Please Login");
+  }
+};
+
+const user_update_budget = async (req, res) => {
+  if (req.session.userId) {
+    const { budget } = req.body;
+
+    try {
+      await prisma.user.update({
+        where: {
+          id: req.session.userId,
+        },
+        data: {
+          budget: budget,
+        },
+      });
+      res.status(200).send("Budget Successfully Updated");
+    } catch (e) {
+      console.log(e);
+      res.status(500).send("Couldn't Set/Modify Budget");
+    }
+  } else {
+    res.status(401).send("Please Login");
+  }
+};
+module.exports = {
+  user_update_meta,
+  user_update_password,
+  user_get_budget,
+  user_update_budget,
+};
