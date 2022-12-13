@@ -18,7 +18,7 @@ const Categories = () => {
   const { data: ctgs, isFetched: isCtgsFetched } =
     useCategoriesGetForCategories();
   const [skip, setSkip] = useState(0);
-
+  console.log(ctgs);
   useEffect(() => {
     if (ctgs) setCategories(ctgs.data[0].id);
   }, [ctgs]);
@@ -80,7 +80,7 @@ const Categories = () => {
           <div className={styles.filterContainer}>
             <div className={styles.filter}>
               <label htmlFor="categories">Categories: </label>
-              {isCtgsFetched ? (
+              {ctgs ? (
                 <select
                   name="categories"
                   onChange={(e) => {

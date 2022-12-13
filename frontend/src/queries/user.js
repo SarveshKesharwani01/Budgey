@@ -1,4 +1,5 @@
 import { useQuery, useMutation } from "react-query";
+import { queryClient } from "../constants/config";
 import Ax from "../utils/Axios";
 
 const fetchUser = async () => {
@@ -49,7 +50,9 @@ const useUserBudgetGet = () => {
 };
 
 const budgetUpdate = async (body) => {
-  return await Ax.patch("me/budget/sm", body);
+  const x =  await Ax.patch("me/budget/sm", body);
+  queryClient.invalidateQueries(); 
+  return x; 
 };
 const useLoginUser = () => useMutation("loginUser", loginUser);
 const useLogoutUser = () => useMutation("logoutUser", logoutUser);

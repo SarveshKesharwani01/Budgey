@@ -151,6 +151,7 @@ const transaction_add_category = async (req, res) => {
         data: {
           name: req.body.name,
           walletId: wallet.id,
+          budget: 0,
           // Transactions: { create: [] },
         },
       });

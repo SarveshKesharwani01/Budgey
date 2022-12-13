@@ -104,7 +104,7 @@ const user_get_budget = async (req, res) => {
           budget: true,
         },
       });
-      console.log(budgetget);
+      // console.log(budgetget);
       res.status(200).send(budgetget);
     } catch (e) {
       console.log(e);

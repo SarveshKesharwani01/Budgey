@@ -1,6 +1,7 @@
 import { useQuery } from "react-query";
 import Ax from "../utils/Axios";
-
+import { useMutation } from "react-query";
+import { queryClient } from "../constants/config";
 const getCtgs = async () => {
   return await Ax.get("/categories");
 };
@@ -10,9 +11,7 @@ const getCtgsSum = async () => {
 };
 
 const useCategoriesGetForTransaction = () => {
-  const { status, data } = useQuery("Categories", getCtgs, {
-    staleTime: 50000,
-  });
+  const { status, data } = useQuery("Categories", getCtgs);
   if (status === "loading") {
     return {};
   }
@@ -29,7 +28,7 @@ const useCategoriesGetForCategories = () => {
     return {};
   }
   if (status === "success") {
-    return { data, isFetched };
+    return { data };
   }
 };
 
@@ -41,8 +40,17 @@ const useCategoriesSum = () => {
   if (status === "success") return data;
 };
 
+const categoryBudgetUpdate = async (body) => {
+  const x = await Ax.patch("categories/budget", body);
+  queryClient.invalidateQueries();
+  return x;
+};
+
+const useCategoryBudget = () =>
+  useMutation("categoryBudgetUpdate", categoryBudgetUpdate);
 export {
   useCategoriesGetForTransaction,
   useCategoriesSum,
   useCategoriesGetForCategories,
+  useCategoryBudget,
 };

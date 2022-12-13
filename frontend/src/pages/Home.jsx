@@ -20,7 +20,7 @@ const Home = () => {
     take: 5,
   });
   const { data: ctgs, isFetched: isCtgsFetched } =
-  useCategoriesGetForCategories();
+    useCategoriesGetForCategories();
   const { data: CategoriesSum } = useCategoriesSum();
 
   // console.log(CategoriesSum);
@@ -28,7 +28,7 @@ const Home = () => {
     fetchTransactions();
   }, []);
   return (
-    <MainContainer optionClass={styles.container}>
+    <MainContainer>
       <div className={styles.main}>
         {/* Search Bar */}
         <div className={styles.searchbar}>
@@ -40,20 +40,26 @@ const Home = () => {
           <Title>Categories last 30 days</Title>
           <div className={styles.content}>
             {/* Sum */}
-            {CategoriesSum && CategoriesSum.map((category, index) => {
-        return <div
-        key={index}>
-          {ctgs && ctgs.data && ctgs?.data?.map((ctgs, index1)=>{
-            if(ctgs.id === category.transactionCategoryId){
-              return <CategoryCard
-                    key={index1}
-                    category={ctgs.name}
-                    money={category._sum.money.toFixed(2)}
-                  />
-            }
-          })}
-        </div>
-      }) }
+            {CategoriesSum &&
+              CategoriesSum.map((category, index) => {
+                return (
+                  <div key={index}>
+                    {ctgs &&
+                      ctgs.data &&
+                      ctgs?.data?.map((ctgs, index1) => {
+                        if (ctgs.id === category.transactionCategoryId) {
+                          return (
+                            <CategoryCard
+                              key={index1}
+                              category={ctgs.name}
+                              money={category._sum.money.toFixed(2)}
+                            />
+                          );
+                        }
+                      })}
+                  </div>
+                );
+              })}
           </div>
         </div>
 

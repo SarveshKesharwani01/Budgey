@@ -5,6 +5,7 @@
 .main {
   margin-top: 1.25rem;
   margin-right: 2rem;
+  // padding-left: 50px;
   width: 100%;
   @media screen and (max-width: 820px) {
     margin-right: 0;
@@ -17,6 +18,10 @@
 
 .categories {
   margin-bottom: 4rem;
+  .content{
+    display: flex;
+    flex-direction: row;
+  }
 }
 
 .transactions {
@@ -33,3 +38,10 @@
     display: none;
   }
 }
+
+// NEW CODE
+// .categorybox{
+//   display: flex; 
+//   flex-direction: column;
+//   width: 100%;
+// }

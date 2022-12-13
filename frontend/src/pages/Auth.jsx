@@ -5,7 +5,7 @@ import MainContainer from "../components/Containers/MainContainer";
 import { Title } from "../components/Titles/Titles";
 import { useContext, useState, useEffect } from "react";
 import { useLoginUser, useRegisterUser } from "../queries/user";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthProvider";
 
 const Auth = () => {
@@ -19,7 +19,7 @@ const Auth = () => {
   const { auth, setAuth } = useContext(AuthContext);
   // navigate
   const navigate = useNavigate();
-  
+
   let body = {
     email: email,
     password: pw,
@@ -32,40 +32,45 @@ const Auth = () => {
 
   const {
     mutate: loginHandler,
-    isError: loginError,
-    error: loginErr,
+    // isError: loginError,
+    // error: loginErr,
   } = useLoginUser();
 
   const {
     mutateAsync: registerHandler,
-    isSuccess: registerSucc,
-    isError: registerError,
-    error: registerErr,
+    // isSuccess: registerSucc,
+    // isError: registerError,
+    // error: registerErr,
   } = useRegisterUser();
 
   useEffect(() => {
     if (auth) navigate("/");
-  },[auth, navigate]);
+  }, [auth, navigate]);
   return (
     <MainContainer>
       {/* Login */}
-      <form action="submit" onSubmit={(e) => e.preventDefault()}>
-        <div className={styles.container}>
+      <form action="submit" onSubmit={(e) => e.preventDefault()} >
+        <div className={[styles.container]}>
           <Title>Login</Title>
-          <span>Email :</span>
-          <input
-            type="email"
-            autoComplete="email"
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-          />
-          <span>Password :</span>
-          <input
-            type="password"
-            onChange={(e) => setPw(e.target.value)}
-            value={pw}
-            autoComplete="password"
-          />
+          <div className={styles.inputs}>
+            <span>Email </span>
+            <input
+              type="email"
+              autoComplete="email"
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+            />
+          </div>
+
+          <div className={styles.inputs}>
+            <span>Password </span>
+            <input
+              type="password"
+              onChange={(e) => setPw(e.target.value)}
+              value={pw}
+              autoComplete="password"
+            />
+          </div>
           {/* Login Button */}
           <button
             onClick={() =>
@@ -87,22 +92,26 @@ const Auth = () => {
         onSubmit={(e) => e.preventDefault()}
         className={styles.registerForm}
       >
-        <div className={styles.container}>
+        <div className={[styles.container]}>
           <Title>Register</Title>
-          <span>Email :</span>
-          <input
-            type="email"
-            autoComplete="email"
-            onChange={(e) => setRegEmail(e.target.value)}
-            value={regEmail}
-          />
-          <span>Password :</span>
-          <input
-            type="password"
-            onChange={(e) => setRegPw(e.target.value)}
-            value={regPw}
-            autoComplete="password"
-          />
+          <div className={styles.inputs}>
+            <span>Email </span>
+            <input
+              type="email"
+              autoComplete="email"
+              onChange={(e) => setRegEmail(e.target.value)}
+              value={regEmail}
+            />
+          </div>
+          <div className={styles.inputs}>
+            <span>Password </span>
+            <input
+              type="password"
+              onChange={(e) => setRegPw(e.target.value)}
+              value={regPw}
+              autoComplete="password"
+            />
+          </div>
           {/* Register button */}
           <button
             onClick={() =>

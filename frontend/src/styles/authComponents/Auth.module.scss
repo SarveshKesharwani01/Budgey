@@ -1,8 +1,18 @@
+
 .container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  left: 20%;
+  // right: 0.5%;
+  width: 50%;
+  position: relative;
+  // NEW CODE
+  border-radius: 45px;
+  background: linear-gradient(145deg, #226252, #3f8d7a);
+  box-shadow: 8px 8px 15px #466e63, -8px -8px 15px #ccffff;
+  padding: 50px;
   h1 {
     font-size: 2rem;
     margin-bottom: 2rem;
@@ -11,6 +21,10 @@
     color: #333;
     font-size: 1rem;
     margin-bottom: 2rem;
+    // NEW CODE
+    // text-align: center;
+    margin-right: 10px;
+    margin-top: 1.4rem;
   }
 
   input {
@@ -20,6 +34,7 @@
     padding: 0.8rem 0.5rem;
     background: #ececec;
     margin-bottom: 1rem;
+    border-radius: 5px;
   }
 
   button {
@@ -36,4 +51,19 @@
 
 .registerForm {
   margin-top: 5rem;
+}
+
+// NEW CODE
+.inputs {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 70%;
+  padding: 20px 10px 10px 10px;
+  margin: 20px;
+  border: solid 2px black;
+  border-radius: 5px;
+  background-color: #a1dfcf;
 }

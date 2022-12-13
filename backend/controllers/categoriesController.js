@@ -24,11 +24,11 @@ const categories_get = async (req, res) => {
         await prisma.transactionCategory
           .createMany({
             data: [
-              { name: "Study", walletId: wallet.id },
-              { name: "Food", walletId: wallet.id },
-              { name: "Entertainment", walletId: wallet.id },
-              { name: "Travel", walletId: wallet.id },
-              { name: "Miscellaneous", walletId: wallet.id },
+              { name: "Study", walletId: wallet.id, budget: 0 },
+              { name: "Food", walletId: wallet.id,budget: 0 },
+              { name: "Entertainment", walletId: wallet.id, budget: 0 },
+              { name: "Travel", walletId: wallet.id, budget: 0 },
+              { name: "Miscellaneous", walletId: wallet.id, budget: 0 },
             ],
             skipDuplicates: true,
           })
@@ -80,7 +80,7 @@ const categories_transaction_sum = async (req, res) => {
           },
         },
       });
-      // console.log(transactions);
+      
       res.send(transactions);
     } catch {
       res.status(400).send("Transaction Error");
@@ -88,4 +88,29 @@ const categories_transaction_sum = async (req, res) => {
   }
 };
 
-module.exports = { categories_get, categories_transaction_sum };
+const categories_budget = async (req, res) => {
+  if (req.session.userId) {
+    const { id, budget } = req.body;
+    try {
+      await prisma.transactionCategory.update({
+        where: {
+          id: id,
+        },
+        data: {
+          budget: budget,
+        },
+      });
+      res.status(200).send("Category Budget Update Successfully");
+    } catch (e) {
+      console.log(e);
+      res.status(500).send("Could Not Set/Modify Category Budget");
+    }
+  } else {
+    res.status(401).send("Please Login");
+  }
+};
+module.exports = {
+  categories_get,
+  categories_transaction_sum,
+  categories_budget,
+};
