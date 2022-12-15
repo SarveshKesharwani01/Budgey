@@ -1,36 +1,32 @@
-
 .container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   left: 20%;
-  // right: 0.5%;
   width: 50%;
   position: relative;
-  // NEW CODE
   border-radius: 45px;
   background: linear-gradient(145deg, #226252, #3f8d7a);
   box-shadow: 8px 8px 15px #466e63, -8px -8px 15px #ccffff;
-  padding: 50px;
   h1 {
     font-size: 2rem;
     margin-bottom: 2rem;
+    margin-right: 10px;
+    margin-top: 1.4rem;
   }
   span {
     color: #333;
     font-size: 1rem;
     margin-bottom: 2rem;
-    // NEW CODE
-    // text-align: center;
-    margin-right: 10px;
-    margin-top: 1.4rem;
+    margin-top: 1rem;
+    margin-right: 1rem;
   }
 
   input {
-    width: 100%;
-    max-width: 350px;
-    font-size: 1rem;
+    // width: 100%;
+    // max-width: 350px;
+    // font-size: 1rem;
     padding: 0.8rem 0.5rem;
     background: #ececec;
     margin-bottom: 1rem;
@@ -40,7 +36,8 @@
   button {
     cursor: pointer;
     transition: all ease-in-out 300ms;
-    padding: 0.2rem 0.5rem;
+    padding: 0.2rem 1rem;
+    margin-bottom: 1rem;
     border-radius: 10px;
     &:hover {
       color: whitesmoke;
@@ -51,6 +48,11 @@
 
 .registerForm {
   margin-top: 5rem;
+  
+}
+
+.loginForm{
+  
 }
 
 // NEW CODE
@@ -66,4 +68,21 @@
   border: solid 2px black;
   border-radius: 5px;
   background-color: #a1dfcf;
+}
+
+.title {
+  font-size: 1rem;
+  color: var(--color-active);
+  padding-top: 1rem;
+  h2 {
+    font-weight: bold;
+  }
+}
+
+.maincontainer {
+  width: 100%;
+  margin-left: max(5vw, 2rem);
+  @media screen and (max-width: 768px) {
+    margin-left: 0;
+  }
 }

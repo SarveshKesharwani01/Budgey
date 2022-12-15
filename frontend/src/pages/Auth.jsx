@@ -47,11 +47,13 @@ const Auth = () => {
     if (auth) navigate("/");
   }, [auth, navigate]);
   return (
-    <MainContainer>
+    <div className={styles.maincontainer}>
       {/* Login */}
-      <form action="submit" onSubmit={(e) => e.preventDefault()} >
+      <form action="submit" onSubmit={(e) => e.preventDefault()} className={styles.loginForm}>
         <div className={[styles.container]}>
-          <Title>Login</Title>
+          <div className={styles.title}>
+            <h2>Login</h2>
+          </div>
           <div className={styles.inputs}>
             <span>Email </span>
             <input
@@ -93,7 +95,9 @@ const Auth = () => {
         className={styles.registerForm}
       >
         <div className={[styles.container]}>
-          <Title>Register</Title>
+          <div className={styles.title}>
+            <h2>Register</h2>
+          </div>
           <div className={styles.inputs}>
             <span>Email </span>
             <input
@@ -133,7 +137,7 @@ const Auth = () => {
           {/* Add Error */}
         </div>
       </form>
-    </MainContainer>
+    </div>
   );
 };
 

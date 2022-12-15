@@ -8,5 +8,6 @@ router.delete(
   transactionController.transaction_delete
 );
 router.get("/transactions", transactionController.transaction_get);
+router.get("/transactions/all", transactionController.transaction_get_all);
 router.post("/transaction/add", transactionController.transaction_add_category);
 module.exports = router;

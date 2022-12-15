@@ -65,23 +65,23 @@ const transaction_get = async (req, res) => {
           },
           date: {
             gte:
-              firstDate != undefined
+              firstDate !== undefined
                 ? DateTime.fromISO(firstDate).toISO()
-                : DateTime.now().minus({ days: 30 }).toISO(),
+                : DateTime.now().minus({ days: 1 }).toISO(),
             lt:
-              lastDate != undefined
+              lastDate !== undefined
                 ? DateTime.fromISO(lastDate).toISO()
                 : DateTime.now().toISO(),
           },
           transactionCategoryId: {
-            equals: category != undefined ? parseInt(category) : undefined,
+            equals: category !== undefined ? parseInt(category) : undefined,
           },
         },
         // skip: parseInt(skip),
         // take: parseInt(take),
         orderBy: {
-          date: dateSort != undefined ? dateSort : undefined,
-          money: priceSort != undefined ? priceSort : undefined,
+          date: dateSort !== undefined ? dateSort : undefined,
+          money: priceSort !== undefined ? priceSort : undefined,
         },
         select: {
           title: true,
@@ -103,6 +103,27 @@ const transaction_get = async (req, res) => {
     res.json(transaction);
     //console.log(transaction);
   } else res.status(401).send("Please Login");
+};
+
+const transaction_get_all = async (req, res) => {
+  if (req.session.userId) {
+    let transaction;
+    try {
+      transaction = await prisma.transaction.findMany({
+        where: {
+          wallet: {
+            userId: req.session.userId,
+          },
+        },
+      });
+      res.status(200).json(transaction);
+    } catch (e) {
+      console.log(e);
+      res.status(400).send("There was error in Fetching Data");
+    }
+  } else {
+    res.status(401).send("Please Login");
+  }
 };
 
 const transaction_delete = async (req, res) => {
@@ -172,4 +193,5 @@ module.exports = {
   transaction_get,
   transaction_delete,
   transaction_add_category,
+  transaction_get_all,
 };

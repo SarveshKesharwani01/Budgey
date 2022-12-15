@@ -17,8 +17,8 @@ const postTr = async (params) => {
 };
 
 const addCategory = async (params) => {
-  return await Ax.post("/transaction/add", params); 
-}
+  return await Ax.post("/transaction/add", params);
+};
 const useTransactionDelete = () => useMutation("deleteTr", deleteTr);
 const useTransactionGet = ({
   firstDate,
@@ -49,6 +49,19 @@ const useTransactionGet = ({
     }
   );
 
+const getAllTransaction = async () => {
+  return await Ax.get("transactions/all").catch((e) => console.log(e));
+};
+const useTransactionGetAll = () => {
+  const x = useQuery("transactionAll", getAllTransaction);
+  return x;
+};
 const useTransactionPost = () => useMutation("postTransaction", postTr);
-const useTransactionCategoryAdd = () => useMutation("addCategory", addCategory); 
-export { useTransactionGet, useTransactionDelete, useTransactionPost, useTransactionCategoryAdd };
+const useTransactionCategoryAdd = () => useMutation("addCategory", addCategory);
+export {
+  useTransactionGet,
+  useTransactionDelete,
+  useTransactionPost,
+  useTransactionCategoryAdd,
+  useTransactionGetAll,
+};

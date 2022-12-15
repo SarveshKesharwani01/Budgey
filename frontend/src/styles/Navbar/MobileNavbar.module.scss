@@ -10,11 +10,11 @@
     background: var(--color-red-300);
     cursor: pointer;
     transition: border-color ease-in-out 250ms;
-    transition: background ease-in-out 250ms; 
-     
+    transition: background ease-in-out 250ms;
+
     &:hover {
       border-color: var(--color-red-600);
-      background: whitesmoke; 
+      background: whitesmoke;
       svg {
         color: var(--color-red-600);
       }
@@ -31,11 +31,11 @@
     margin-top: 3rem;
     margin-right: 1rem;
   }
-   
+
   .times {
     border-color: whitesmoke;
   }
-    
+
   nav {
     padding: 2rem;
     position: absolute;

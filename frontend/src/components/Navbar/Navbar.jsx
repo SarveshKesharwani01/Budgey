@@ -38,44 +38,53 @@ const Navbar = () => {
       </div>
       {/* Nav */}
       <nav>
-        {auth ? <ul>
-          {/*Home*/}
-          <ListItemLink url="">
-            <h3>Home</h3>
-          </ListItemLink>
-
-          {/*Categories*/}
-          <ListItemLink url="categories">
-            <h3>Categories</h3>
-          </ListItemLink>
-
-          {/*Transaction*/}
-          <ListItemLink url="transactions">
-            <h3>Transactions</h3>
-          </ListItemLink>
-
-          {/*Wallet*/}
-          <ListItemLink url="wallet">
-            <h3>Wallet</h3>
-          </ListItemLink>
-
-          {/*Profile*/}
-          <div className={styles.mobileMenuLinks}>
-            <ListItemLink url="profile">
-              <h3>Profile</h3>
+        {auth ? (
+          <ul>
+            {/*Home*/}
+            <ListItemLink url="">
+              <h3>Home</h3>
             </ListItemLink>
-          </div>
 
-          {/*Settings*/}
-          <div className={styles.mobileMenuLinks}>
-            <ListItemLink url="settings">
-              <h3>Settings</h3>
+            {/*Categories*/}
+            <ListItemLink url="categories">
+              <h3>Categories</h3>
             </ListItemLink>
-          </div>
-          <ListItemLink url="logout" clickHandler={logoutHandler}>
-            <h3>Logout</h3>
-          </ListItemLink>
-        </ul> : <div> </div>}
+
+            {/*Transaction*/}
+            <ListItemLink url="transactions">
+              <h3>Transactions</h3>
+            </ListItemLink>
+
+            {/*Wallet*/}
+            <ListItemLink url="wallet">
+              <h3>Wallet</h3>
+            </ListItemLink>
+
+            {/* Graphs */}
+            <ListItemLink url="graphs">
+              <h3>Graphs</h3>
+            </ListItemLink>
+
+            {/*Profile*/}
+            <div className={styles.mobileMenuLinks}>
+              <ListItemLink url="profile">
+                <h3>Profile</h3>
+              </ListItemLink>
+            </div>
+
+            {/*Settings*/}
+            <div className={styles.mobileMenuLinks}>
+              <ListItemLink url="settings">
+                <h3>Settings</h3>
+              </ListItemLink>
+            </div>
+            <ListItemLink url="logout" clickHandler={logoutHandler}>
+              <h3>Logout</h3>
+            </ListItemLink>
+          </ul>
+        ) : (
+          <div> </div>
+        )}
       </nav>
     </div>
   );

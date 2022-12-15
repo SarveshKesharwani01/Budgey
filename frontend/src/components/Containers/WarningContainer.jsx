@@ -8,7 +8,7 @@ const WarningContainer = (params) => {
   if (show) {
     return (
       <div className={styles.container}>
-        <Alert variant="warning" onClose={() => setShow(false)} dismissible>
+        <Alert variant="warning" onClose={() => setShow(false)}>
           <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
           <p>{params.message}</p>
         </Alert>

@@ -29,7 +29,7 @@ const Home = () => {
   }, []);
   return (
     <MainContainer>
-      <div className={styles.main}>
+      <div className={[styles.main, styles.container].join(" ")}>
         {/* Search Bar */}
         <div className={styles.searchbar}>
           <Searchbar />
@@ -55,6 +55,8 @@ const Home = () => {
                               money={category._sum.money.toFixed(2)}
                             />
                           );
+                        } else {
+                          return <div></div>;
                         }
                       })}
                   </div>
@@ -65,7 +67,7 @@ const Home = () => {
 
         {/* Transactions */}
         <div className={styles.transactions}>
-          <Title>Latest Transaction</Title>
+          <Title>Today's Transaction</Title>
           <div className={styles.content}>
             {/* Latest Transaction */}
             {transactions &&
@@ -74,7 +76,7 @@ const Home = () => {
                   <TransactionCard
                     key={index}
                     category={transaction.category.name}
-                    data={DateTime.fromISO(transaction.date).toISODate()}
+                    date={DateTime.fromISO(transaction.date).toFormat("dd-MM-yyyy")}
                     money={transaction.money.toFixed(2)}
                     description={transaction.info}
                     title={transaction.title}
@@ -83,9 +85,9 @@ const Home = () => {
               })}
           </div>
         </div>
-      </div>
-      <div className={styles.profile}>
-        <HomeProfile />
+        <div className={styles.profile}>
+          <HomeProfile />
+        </div>
       </div>
     </MainContainer>
   );

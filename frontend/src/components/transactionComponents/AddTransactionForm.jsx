@@ -2,7 +2,10 @@ import styles from "../../styles/transactionComponents/AddTransactionForm.module
 import { Title } from "../Titles/Titles";
 
 import { useEffect, useState } from "react";
-import { useCategoriesGetForTransaction } from "../../queries/category";
+import {
+  useCategoriesGetForTransaction,
+  useCategoriesSum,
+} from "../../queries/category";
 import { useTransactionPost } from "../../queries/transaction";
 import { DateTime } from "luxon";
 import { queryClient } from "../../constants/config";
@@ -14,19 +17,20 @@ const AddTransactionForm = () => {
   const [date, setDate] = useState(DateTime.now().toISODate());
   const [info, setInfo] = useState("");
   const [category, setCategory] = useState(10);
-
-  const { data: ctgs } = useCategoriesGetForTransaction();
-
+  const [load, setLoad] = useState(0);
   const [isTitle, setIsTitle] = useState("");
   const [isMoney, setIsMoney] = useState("");
   const [warning1, setWarning1] = useState(0);
   const [warning2, setWarning2] = useState(0);
   const [warning3, setWarning3] = useState(0);
+  const { data: ctgs } = useCategoriesGetForTransaction();
+  const { data: CategoriesSum } = useCategoriesSum();
+
   // console.log("ctgs: ", ctgs);
-  useEffect(() => {
-    if (ctgs !== undefined) setCategory(ctgs[0].id);
-    else setCategory(1);
-  }, [ctgs]);
+  // useEffect(() => {
+  //   if (ctgs !== undefined) setCategory(ctgs[0].id);
+  //   else setCategory(1);
+  // }, [ctgs]);
 
   const {
     mutate: postTransaction,
@@ -43,7 +47,31 @@ const AddTransactionForm = () => {
     info: info,
     transactionCategoryId: parseInt(category),
   };
-
+  // console.log(category);
+  useEffect(() => {
+    if (warning1 === 1) {
+      setTimeout(() => {
+        setWarning1(0);
+      }, 2000);
+    }
+    if (warning2 === 1) {
+      setTimeout(() => {
+        setWarning2(0);
+      }, 2000);
+    }
+    if (warning3 === 1) {
+      setTimeout(() => {
+        setWarning3(0);
+      }, 2000);
+    }
+    // console.log(warning1, warning2, warning3, warning4, warning5);
+    if (isSuccess || isError) {
+      setLoad(1);
+      setTimeout(() => {
+        setLoad("");
+      }, 2000);
+    }
+  }, [isError, isSuccess, warning1, warning2, warning3]);
   return (
     <div className={styles.container}>
       <Title>Add a Transaction</Title>
@@ -97,13 +125,14 @@ const AddTransactionForm = () => {
               setCategory(e.target.value);
             }}
           >
-            {ctgs?.map((ctg) => {
-              return (
-                <option key={ctg.id} value={ctg.id}>
-                  {ctg.name}
-                </option>
-              );
-            })}
+            {ctgs &&
+              ctgs?.map((ctg) => {
+                return (
+                  <option key={ctg.id} value={ctg.id}>
+                    {ctg.name}
+                  </option>
+                );
+              })}
           </select>
         ) : (
           <div>Loading...</div>
@@ -114,6 +143,14 @@ const AddTransactionForm = () => {
           onClick={() => {
             setIsMoney(body.money);
             setIsTitle(body.title);
+            // console.log(ctgs, category);
+            const iD = ctgs?.find((id) => {
+              return id.id === category;
+            });
+            const spending = CategoriesSum?.find((ids) => {
+              return ids.transactionCategoryId === category;
+            });
+            console.log(spending, iD);
             if (
               !isNaN(body.money) &&
               body.money > 0 &&
@@ -132,12 +169,10 @@ const AddTransactionForm = () => {
                 },
               });
             } else {
+              // console.log(warning1, warning2, warning3, warning4, warning5);
               if (isNaN(body.money)) setWarning2(1);
-              else setWarning2(0);
               if (body.title.trim().length === 0) setWarning1(1);
-              else setWarning1(0);
               if (body.money <= 0) setWarning3(1);
-              else setWarning3(0);
             }
           }}
         >
@@ -146,14 +181,14 @@ const AddTransactionForm = () => {
 
         {/* Error */}
         <div styple={{ marginBottom: "1rem" }}>
-          {isError && (
+          {isError && load && (
             <div style={{ color: "red" }}>
               {`${error.response.data.instancePath} : ${
                 error.response.data.message ? error.response.data.message : ""
               }`}
             </div>
           )}
-          {isSuccess && <div style={{ color: "green" }}>Success</div>}
+          {isSuccess && load && <div style={{ color: "green" }}>Success</div>}
         </div>
       </div>
     </div>

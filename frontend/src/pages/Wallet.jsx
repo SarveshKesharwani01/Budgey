@@ -1,8 +1,8 @@
 //components
 import { Title } from "../components/Titles/Titles";
-import MainContainer from "../components/Containers/MainContainer";
 import Budget from "../components/Wallet/Budget";
 import CategoryBudget from "../components/Wallet/CategoryBudget";
+import styles from "../styles/Wallet/Wallet.module.scss";
 import {
   useCategoriesSum,
   useCategoriesGetForCategories,
@@ -20,31 +20,36 @@ const Wallet = () => {
 
   // console.log(CategoriesSum);
   return (
-    <MainContainer>
+    <div className={styles.container}>
       <Title>Wallet</Title>
-      <Budget sum={CategoriesSum} totalBudget={totalBudget} />
+      <div className={styles.totalBudget}>Total Budget</div>
       <div>
-        <div>Unallocated Budget</div>
-        <div>{totalBudget.budget - total_category_budget}</div>
+        <Budget sum={CategoriesSum} totalBudget={totalBudget} />
+        <div className={styles.unallocated}>
+          <div className={styles.unallocated1}>Unallocated Budget</div>
+          <div>{totalBudget.budget - total_category_budget}</div>
+        </div>
+        <div className={styles.totalBudget}>Category-Wise Budget</div>
+        <div className={styles.categoryBudget}>
+          {ctgs &&
+            ctgs.data &&
+            ctgs.data.map((category, index) => {
+              const value = CategoriesSum?.find((ids) => {
+                return category.id === ids.transactionCategoryId;
+              });
+              return (
+                <CategoryBudget
+                  key={index}
+                  cat={category}
+                  sum={value?._sum.money}
+                  totalBudget={totalBudget}
+                  totalCategoryBudget={total_category_budget}
+                />
+              );
+            })}
+        </div>
       </div>
-      {ctgs &&
-        ctgs.data &&
-        ctgs.data.map((category, index) => {
-          const value = CategoriesSum?.find((ids) => {
-            return category.id === ids.transactionCategoryId;
-          });
-          return (
-            <CategoryBudget
-              key={index}
-              cat={category}
-              sum={value?._sum.money}
-              totalBudget={totalBudget}
-              totalCategoryBudget={total_category_budget}
-            />
-          );
-        })}
-      
-    </MainContainer>
+    </div>
   );
 };
 export default Wallet;
